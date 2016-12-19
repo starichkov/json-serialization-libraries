@@ -12,14 +12,18 @@
         <version.gson>2.6.2</version.gson>
         <version.jackson>2.8.5</version.jackson>
         <version.junit>4.12</version.junit>
+        <version.javax.json-api>1.0</version.javax.json-api>
+        <version.javax.json>1.0.4</version.javax.json>
     </properties>
 
     <dependencies>
+        <!-- GSON -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>${version.gson}</version>
         </dependency>
+        <!-- Jackson -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
@@ -30,6 +34,18 @@
             <artifactId>jackson-databind</artifactId>
             <version>${version.jackson}</version>
         </dependency>
+        <!-- JSON.P -->
+        <dependency>
+            <groupId>javax.json</groupId>
+            <artifactId>javax.json-api</artifactId>
+            <version>${version.javax.json-api}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.json</artifactId>
+            <version>${version.javax.json}</version>
+        </dependency>
+        <!-- Testing -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
