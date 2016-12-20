@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import org.junit.Test;
 
 /**
+ * Google's JSON library - most convenient library.
+ *
  * @author Vadim Starichkov
  * @since 16.12.2016 17:53
  */

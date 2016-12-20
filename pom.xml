@@ -14,6 +14,7 @@
         <version.junit>4.12</version.junit>
         <version.javax.json-api>1.0</version.javax.json-api>
         <version.javax.json>1.0.4</version.javax.json>
+        <version.json-simple>1.1.1</version.json-simple>
     </properties>
 
     <dependencies>
@@ -44,6 +45,12 @@
             <groupId>org.glassfish</groupId>
             <artifactId>javax.json</artifactId>
             <version>${version.javax.json}</version>
+        </dependency>
+        <!-- json-simple-->
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>${version.json-simple}</version>
         </dependency>
         <!-- Testing -->
         <dependency>

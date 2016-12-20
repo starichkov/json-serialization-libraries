@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.StringWriter;
 
 /**
+ * Jackson library is almost as good as Google's one.
+ *
  * @author Vadim Starichkov
  * @since 16.12.2016 17:52
  */
