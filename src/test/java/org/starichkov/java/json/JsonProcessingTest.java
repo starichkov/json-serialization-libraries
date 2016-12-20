@@ -3,14 +3,17 @@ package org.starichkov.java.json;
 import org.junit.Test;
 
 import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
-import javax.json.JsonStructure;
+import javax.json.JsonValue;
 import javax.json.JsonWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Using Oracle's <a href='https://jsonp.java.net/'>JSON Processing</a> library - the most awkward JSON library to use.
@@ -36,11 +39,10 @@ public class JsonProcessingTest extends BaseTest {
         }
 
         String jsonData = stringWriter.toString();
-        System.out.println(jsonData);
-
         JsonReader reader = Json.createReader(new StringReader(jsonData));
-        JsonStructure jsonStructure = reader.read();
-        System.out.println(jsonStructure);
+        BaseEntity entityFromJson = new BaseEntity();
+        fillEntityFromJson(reader.read(), entityFromJson);
+        checkAsserts(entity, entityFromJson);
     }
 
     private void writeChildren(JsonObjectBuilder builder, BaseEntity parent) {
@@ -62,7 +64,39 @@ public class JsonProcessingTest extends BaseTest {
         builder.add("children", arrayBuilder);
     }
 
-    private void readChildren() {
-        // TODO
+    private void fillEntityFromJson(JsonValue treeNode, BaseEntity root) {
+        switch (treeNode.getValueType()) {
+            case OBJECT:
+                JsonObject object = (JsonObject) treeNode;
+                for (String key : object.keySet()) {
+                    switch (key) {
+                        case "id":
+                            root.setId(object.getInt(key));
+                            break;
+                        case "name":
+                            root.setName(object.getString(key));
+                            break;
+                        case "children":
+                            JsonValue jsonValue = object.get(key);
+                            if (JsonValue.ValueType.ARRAY == jsonValue.getValueType()) {
+                                fillEntityFromJson(jsonValue, root);
+                            }
+                            break;
+                    }
+                }
+                break;
+            case ARRAY:
+                JsonArray children = (JsonArray) treeNode;
+                List<BaseEntity> childEntities = new ArrayList<>(children.size());
+
+                children.forEach(child -> {
+                    BaseEntity childEntity = new BaseEntity();
+                    fillEntityFromJson(child, childEntity);
+                    childEntities.add(childEntity);
+                });
+
+                root.setChildren(childEntities);
+                break;
+        }
     }
 }

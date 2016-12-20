@@ -19,13 +19,16 @@ abstract class BaseTest {
     public void init() {
         random = new Random();
         entity = new BaseEntity(random.nextInt(100500), "Test Entity");
-        addChildren(entity, 3);
-        entity.getChildren().forEach(child -> addChildren(child, 3));
+        fillChildren(entity, 3, 3);
     }
 
-    private void addChildren(BaseEntity parent, int count) {
-        for (int i = 0; i < count; i++) {
+    private void fillChildren(BaseEntity parent, int childCount, int depth) {
+        if (depth < 0) {
+            return;
+        }
+        for (int i = 0; i < childCount; i++) {
             BaseEntity child = new BaseEntity(random.nextInt(100500) + i, "Test Child Entity");
+            fillChildren(child, childCount, depth - 1);
             parent.addChild(child);
         }
     }
