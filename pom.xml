@@ -9,6 +9,8 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.targetEncoding>UTF-8</project.build.targetEncoding>
         <version.gson>2.6.2</version.gson>
         <version.jackson>2.8.5</version.jackson>
         <version.junit>4.12</version.junit>

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * @author Vadim Starichkov
@@ -34,6 +35,8 @@ abstract class BaseTest {
     }
 
     void checkAsserts(BaseEntity expected, BaseEntity actual) {
+        assertNotNull(expected);
+        assertNotNull(actual);
         assertEquals(actual.getId(), expected.getId());
         assertEquals(actual.getName(), expected.getName());
         assertEquals(actual.getChildren().size(), expected.getChildren().size());
@@ -44,6 +47,8 @@ abstract class BaseTest {
         for (int i = 0; i < actualChildren.size(); i++) {
             BaseEntity childFromJson = actualChildren.get(i);
             BaseEntity child = expectedChildren.get(i);
+            assertNotNull(childFromJson);
+            assertNotNull(child);
             assertEquals(childFromJson.getId(), child.getId());
             assertEquals(childFromJson.getName(), child.getName());
             assertEquals(childFromJson.getChildren().size(), child.getChildren().size());

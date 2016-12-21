@@ -6,6 +6,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,48 +27,16 @@ public class JsonSimpleTest extends BaseTest {
 
         String json = jsonObject.toJSONString();
 
-        // TODO - implement parsing
-
         BaseEntity entityFromJson = new BaseEntity();
         try {
             JSONParser parser = new JSONParser();
-
             Object object = parser.parse(json);
-            if (isJsonObject(object)) {
-                JSONObject jsonObject1 = (JSONObject) object;
-                for (Object keyObject : jsonObject1.keySet()) {
-                    /*if (isString(keyObject)) {
-                        String key = (String) keyObject;
-                        switch (key) {
-                            case "id":
-                                entityFromJson.setId(object.getInt(key));
-                                break;
-                            case "name":
-                                entityFromJson.setName(object.getString(key));
-                                break;
-                            case "children":
-                                JsonValue jsonValue = object.get(key);
-                                if (JsonValue.ValueType.ARRAY == jsonValue.getValueType()) {
-                                    fillEntityFromJson(jsonValue, root);
-                                }
-                                break;
-                        }
-                    }*/
-                    Object valueObject = jsonObject1.get(keyObject);
-                    System.out.println("[" + keyObject.getClass().getSimpleName() + "] " + keyObject + " > " + "[" + valueObject.getClass().getSimpleName() + "] " + valueObject);
-                }
-            }
-
-            /*
-            JSONArray array = (JSONArray) object;
-
-            JSONObject obj2 = (JSONObject) array.get(1);
-            */
+            read(object, entityFromJson);
         } catch (ParseException ex) {
             ex.printStackTrace();
         }
 
-//        checkAsserts(entity, entityFromJson);
+        checkAsserts(entity, entityFromJson);
     }
 
     private JSONObject createJsonEntity(BaseEntity entity) {
@@ -88,19 +57,57 @@ public class JsonSimpleTest extends BaseTest {
         return jsonArray;
     }
 
+    private void read(Object object, BaseEntity root) {
+        if (!isJsonObject(object)) {
+            return;
+        }
+
+        JSONObject jsonObject = (JSONObject) object;
+        for (Object keyObject : jsonObject.keySet()) {
+            if (isString(keyObject)) {
+                String key = (String) keyObject;
+                Object value = jsonObject.get(key);
+                switch (key) {
+                    case "id":
+                        if (isNumber(value)) {
+                            root.setId(((Number) value).intValue());
+                        }
+                        break;
+                    case "name":
+                        if (isString(value)) {
+                            root.setName((String) value);
+                        }
+                        break;
+                    case "children":
+                        if (isJsonArray(value)) {
+                            JSONArray array = (JSONArray) value;
+                            List<BaseEntity> children = new ArrayList<>(array.size());
+                            array.forEach(o -> {
+                                BaseEntity child = new BaseEntity();
+                                read(o, child);
+                                children.add(child);
+                            });
+                            root.setChildren(children);
+                        }
+                        break;
+                }
+            }
+        }
+    }
+
     private static boolean isNumber(Object object) {
-        return object.getClass().isAssignableFrom(Number.class);
+        return Number.class.isAssignableFrom(object.getClass());
     }
 
     private static boolean isString(Object object) {
-        return object.getClass().isAssignableFrom(String.class);
+        return String.class.isAssignableFrom(object.getClass());
     }
 
     private static boolean isJsonArray(Object object) {
-        return object.getClass().isAssignableFrom(JSONArray.class);
+        return JSONArray.class.isAssignableFrom(object.getClass());
     }
 
     private static boolean isJsonObject(Object object) {
-        return object.getClass().isAssignableFrom(JSONObject.class);
+        return JSONObject.class.isAssignableFrom(object.getClass());
     }
 }
