@@ -14,7 +14,7 @@
         <version.gson>2.6.2</version.gson>
         <version.jackson.core>2.9.10</version.jackson.core>
         <version.jackson.databind>2.9.10.1</version.jackson.databind>
-        <version.junit>4.12</version.junit>
+        <version.junit>4.13.1</version.junit>
         <version.javax.json-api>1.0</version.javax.json-api>
         <version.javax.json>1.0.4</version.javax.json>
         <version.json-simple>1.1.1</version.json-simple>
