@@ -9,16 +9,40 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <properties>
+        <java.version>11</java.version>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.targetEncoding>UTF-8</project.build.targetEncoding>
-        <version.gson>2.6.2</version.gson>
-        <version.jackson.core>2.9.10</version.jackson.core>
-        <version.jackson.databind>2.9.10.8</version.jackson.databind>
-        <version.junit>4.13.1</version.junit>
-        <version.javax.json-api>1.0</version.javax.json-api>
-        <version.javax.json>1.0.4</version.javax.json>
+
+        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
+        <maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
+
+        <version.gson>2.8.9</version.gson>
+        <version.jackson>2.13.2</version.jackson>
+        <version.junit>5.8.2</version.junit>
+        <version.javax.json-api>1.1.4</version.javax.json-api>
+        <version.javax.json>1.1.4</version.javax.json>
         <version.json-simple>1.1.1</version.json-simple>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.fasterxml.jackson</groupId>
+                <artifactId>jackson-bom</artifactId>
+                <version>${version.jackson}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>${version.junit}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <!-- GSON -->
@@ -27,17 +51,17 @@
             <artifactId>gson</artifactId>
             <version>${version.gson}</version>
         </dependency>
+
         <!-- Jackson -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>${version.jackson.core}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>${version.jackson.databind}</version>
         </dependency>
+
         <!-- JSON.P -->
         <dependency>
             <groupId>javax.json</groupId>
@@ -49,17 +73,18 @@
             <artifactId>javax.json</artifactId>
             <version>${version.javax.json}</version>
         </dependency>
+
         <!-- json-simple-->
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
             <artifactId>json-simple</artifactId>
             <version>${version.json-simple}</version>
         </dependency>
+
         <!-- Testing -->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${version.junit}</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -70,11 +95,15 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.3</version>
+                    <version>${maven.compiler.plugin.version}</version>
                     <configuration>
-                        <source>1.8</source>
-                        <target>1.8</target>
+                        <release>${java.version}</release>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven.surefire.plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>

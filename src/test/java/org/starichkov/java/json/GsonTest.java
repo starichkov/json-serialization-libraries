@@ -1,7 +1,7 @@
 package org.starichkov.java.json;
 
 import com.google.gson.Gson;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Google's JSON library - most convenient library.

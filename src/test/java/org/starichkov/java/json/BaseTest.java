@@ -1,12 +1,12 @@
 package org.starichkov.java.json;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * @author Vadim Starichkov
@@ -16,7 +16,7 @@ abstract class BaseTest {
     private Random random;
     BaseEntity entity;
 
-    @Before
+    @BeforeEach
     public void init() {
         random = new Random();
         entity = new BaseEntity(random.nextInt(100500), "Test Entity");

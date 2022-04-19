@@ -1,6 +1,6 @@
 package org.starichkov.java.json;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import javax.json.Json;
 import javax.json.JsonArray;
